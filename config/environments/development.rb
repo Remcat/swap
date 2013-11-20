@@ -15,6 +15,7 @@ Swap::Application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -27,11 +28,15 @@ Swap::Application.configure do
   # number of complex assets.
   config.assets.debug = true  
 
+    
     config.action_mailer.smtp_settings = {
       :address   => "smtp.mandrillapp.com",
-      :port      => 25,
-      :user_name => ENV["MANDRILL_USERNAME"],
-      :password  => ENV["MANDRILL_API_KEY"]
+      :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
+      :enable_starttls_auto => true, # detects and uses STARTTLS
+      :user_name => "ramy.abdelazim@gmail.com",
+      :password  => "3FYBDz42pCWZmAcsLp69Hw", # SMTP password is any valid API key
+      :authentication => 'login', # Mandrill supports 'plain' or 'login'
+      :domain => 'yourdomain.com', # your domain to identify your server when connecting
     }
   # Send email in development mode.
   config.action_mailer.perform_deliveries = true
