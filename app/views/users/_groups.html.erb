@@ -1,0 +1,7 @@
+<p>Groups:
+  <% @user.owned_groups.each do |group|%>
+
+    <li><%= link_to group.group_name, group %></li>
+
+   <% end %>
+</p>
