@@ -7,8 +7,24 @@
 
 <p>
   <strong>Owner:</strong>
-  <%= @group.owner_id %>
+  <%= @group.owner.name %>
 </p>
-
+<p>
+<% unless @group.users.count == 0 %>
+  <strong>Members:</strong>
+  <% @group.users.each do |member| %>
+  	<%= member.name %>
+  <% end %>
+<% end %>
+</p>
+<p> <%= link_to 'Invite a Friend', invitation_to_group_path %> <p>
+<p>
+	<%= form_tag invite_members_to_groups_path, :method => :post do %>
+  	<%= label_tag "Would you like to invite more friends?" %> </br>
+  	<%= label_tag "Enter their email addresses separated by a comma (or one on each line)." %> </br>
+  	<%= text_area_tag :invitees %>
+  	<%= submit_tag "Invite My Friends!" %>
+<% end %>
+</p>
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>

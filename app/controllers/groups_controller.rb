@@ -1,6 +1,12 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
+  def invite_members
+    @invites = Group.send_invitations(params[:invitees])
+    @invites.each do |invitee|
+      User.invite!(:email => invitee)
+    end
+  end
   # GET /groups
   # GET /groups.json
   def index
@@ -25,6 +31,7 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
+    @group.users << current_user
 
     respond_to do |format|
       if @group.save

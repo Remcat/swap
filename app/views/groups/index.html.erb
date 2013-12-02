@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Group name</th>
-      <th>Owner</th>
+      <th>Owned by</th>
       <th></th>
       <th></th>
       <th></th>
@@ -15,7 +15,7 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= group.group_name %></td>
-        <td><%= group.owner_id %></td>
+        <td><%= group.owner.name %></td>
         <td><%= link_to 'Show', group %></td>
         <td><%= link_to 'Edit', edit_group_path(group) %></td>
         <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
