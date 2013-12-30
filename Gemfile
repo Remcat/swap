@@ -16,6 +16,8 @@ gem 'pg'
 gem 'rolify'
 gem 'simple_form'
 gem 'event-calendar', :require => 'event_calendar'
+gem 'fullcalendar-rails'
+gem 'jquery-turbolinks'
 
 group :development do
   gem 'better_errors'

@@ -1,4 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<p>Title: <%= @event.title %></p>
+<p>Owner: <%= @event.owner.name %></p>
+<p>Start: <%= @event.start_at %></p>
+<p>End: <%= @event.end_at %></p>
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

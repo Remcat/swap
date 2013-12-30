@@ -1,0 +1,19 @@
+<%= simple_form_for(@event) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  	<%= form_tag event_invitations_path, :method => :post do %>
+  	<%= label_tag "Email ids of people you'd like to invite." %>
+  </div><div>
+  	<%= text_area_tag :user_emails %>
+  </div><div>
+  	<%= label_tag "Your message:" %>
+  </div><div>
+  	<%= text_area_tag :email_message %>
+	<% end %>
+  </div>
+
+  <div class="form-actions">
+  		<%= submit_tag "Invite!", :class => "btn-primary"  %>
+  </div>
+<% end %>

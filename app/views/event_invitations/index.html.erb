@@ -1,0 +1,25 @@
+<h1>Listing event_invitations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @event_invitations.each do |event_invitation| %>
+      <tr>
+        <td><%= link_to 'Show', event_invitation %></td>
+        <td><%= link_to 'Edit', edit_event_invitation_path(event_invitation) %></td>
+        <td><%= link_to 'Destroy', event_invitation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Event invitation', new_event_invitation_path %>

@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121164637) do
+ActiveRecord::Schema.define(version: 20131204192435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "event_invitations", force: true do |t|
+    t.integer  "invite_sent_by"
+    t.integer  "invite_sent_to"
+    t.string   "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.integer  "invited_by_id"
+    t.string   "invited_by_type"
+    t.integer  "event_id"
+  end
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -25,6 +38,9 @@ ActiveRecord::Schema.define(version: 20131121164637) do
     t.integer  "owner_id"
     t.integer  "group_id"
     t.integer  "sitter_id"
+    t.string   "description"
+    t.boolean  "all_day"
+    t.string   "title"
   end
 
   create_table "group_members", force: true do |t|
@@ -82,6 +98,15 @@ ActiveRecord::Schema.define(version: 20131121164637) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_event_invitations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "invite_sent_by"
+    t.integer  "invite_sent_to"
+  end
 
   create_table "users_roles", id: false, force: true do |t|
     t.integer "user_id"

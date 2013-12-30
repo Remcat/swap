@@ -1,0 +1,15 @@
+<%= simple_form_for(@invitation) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  	<%= form_tag batch_invite_users_path, :method => :post do %>
+  		<%= label_tag "Email ids of people you'd like to invite." %>
+  		<%= text_area_tag :user_emails %>
+  		<%= submit_tag "Invite!" %>
+	<% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

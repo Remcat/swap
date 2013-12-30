@@ -4,7 +4,12 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = Event.all  
+    @events = Event.between(params['start_at'], params['end_at']) if (params['start_at'] && params['end_at'])  
+    respond_to do |format|  
+      format.html # index.html.erb  
+      format.json { render :json => @events }  
+    end  
   end
 
   # GET /events/1
@@ -15,6 +20,7 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    @event.users_event_invitations.build
   end
 
   # GET /events/1/edit
@@ -24,10 +30,17 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
+    @event = Event.new(event_params)  
+    #@event.users_event_invitations.build
+    invitees = @event.lookup_and_send_emails( params[:user_emails], params[:email_message])
+
+    invitees.each do |email|
+      User.invite!({email: email}, current_user)
+    end
 
     respond_to do |format|
       if @event.save
+        #Maybe handle the case when sitter.nil? ?
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render action: 'show', status: :created, location: @event }
       else
@@ -69,6 +82,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params[:event]
+      params.require(:event).permit(:title, :name, :description, :start_at, :end_at, :owner_id, :sitter_id, :group_id, :user_emails)
     end
 end
